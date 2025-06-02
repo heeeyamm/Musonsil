@@ -65,6 +65,15 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       transition: transform 0.3s;
     }
+
+    .archive-item{
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
     .archive-text {
      max-width: 500px;
      text-align: left;
@@ -72,9 +81,11 @@
      line-height: 1.6;
      color: #333;
     }
+
     .archive-gallery img:hover {
       transform: scale(1.02);
     }
+    
   </style>
 </head>
 <body>
@@ -89,19 +100,24 @@
   </div>
 
   <div class="archive-gallery">
+    <div class="archive-item"></div>
     <img src="images/2.png" alt="앨범커버아카이브 1">
     <div class="archive-text">
         <h3> Wynd Chymes - Arrival (1982)</h3>
         <p>Genre: Funk/Soul </p>
         <p>Style: Soul, Funk, Boogie</p>
-        
     </div>
+  </div>
+
+    <div class="archive-item"></div>
     <img src="images/1.png" alt="앨범커버아카이브 2">
     <div class="archive-text">
         <h3> Kengo Kurozumi - Again (1982)</h3>
         <p>Genre: Funk/Soul, Pop </p>
         <p>Style: Boogie, City Pop, Funk</p>
-    </div>
+     </div>
+
+    <div class="archive-item"></div>
     <img src="images/3.png" alt="앨범커버아카이브 3">
     <div class="archive-text">
         <h3> O'donel Levy - Time Has Changed (1977)</h3>
