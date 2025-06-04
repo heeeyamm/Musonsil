@@ -1,18 +1,26 @@
-// 장바구니에 상품추가
-function buttoncart(name, price) {
+// 🛒 상품을 장바구니에 추가하는 함수
+function buttoncart(productName, price) {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  cart.push({ name, price });
+  cart.push({ name: productName, price: price });
   localStorage.setItem('cart', JSON.stringify(cart));
 
+  // 장바구니 담김 알림 UI 보여주기
   const notice = document.getElementById('cart-notice');
-  if (notice) notice.style.display = 'block';
+  if (notice) {
+    notice.style.display = 'block';
+  }
 
-  if (typeof updateCartCount === 'function') updateCartCount();
+  // 장바구니 수량 업데이트 함수가 있으면 호출
+  if (typeof updateCartCount === 'function') {
+    updateCartCount();
+  }
 }
 
-// 장바구니 아이템 수 업데이트 (선택)
+// 🧮 장바구니 수량 표시용 함수 (선택 기능)
 function updateCartCount() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const countElem = document.getElementById('cart-count');
-  if (countElem) countElem.textContent = cart.length;
+  if (countElem) {
+    countElem.textContent = cart.length;
+  }
 }
