@@ -276,15 +276,6 @@
   }).render('#paypal-button-container');
 </script>
 
-<!-- 장바구니 기능 자바스크립트-->
-<script>
-  function buttoncart(productName, price) {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  cart.push({ name: productName, price: price });
-  localStorage.setItem('cart', JSON.stringify(cart));
-  alert(`${productName} is now added to cart!`);
-}
-</script>
 <script src="cart.js"></script>
   </div>
 </div>
