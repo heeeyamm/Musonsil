@@ -1,5 +1,5 @@
-// 장바구니에 상품 추가
-function addToCart(name, price) {
+// 장바구니에 상품추가
+function buttoncart(name, price) {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   cart.push({ name, price });
   localStorage.setItem('cart', JSON.stringify(cart));
