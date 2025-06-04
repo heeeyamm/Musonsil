@@ -62,6 +62,7 @@
 
     .product-image {
         text-align: center;
+        margin-bottom: 20px;
     }
 
     .product-info {
@@ -110,6 +111,26 @@
         object-fit: cover;
     }
 
+    .thumbnail-row {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .thumb {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    .thumb:hover {
+        transform: scale(1.1);
+        border: 2px solid #888
+    }
+
 
   </style>
 </head>
@@ -125,16 +146,17 @@
     <a href="/about.html">About</a>
   </div>
 
-<div class="product-detail">
-  <div class="product-image">
-    <img src="bossabowl.png" alt="bossabowl" class="main-img" />
-    <div class="sub-images">
-        <img src="bossagreensub1.jpg" alt="sub image1" />
-        <img src="bossagreensub2.jpg" alt="sub image2" />
+<div class="product-detail">  사진자리
+    <img id="mainImage" src="bossabowl.png" alt="Main Image" class="main-img" />
+    <div class="thumbnail-row"></div>
+      <img src="bossabowl.png" class="thumb" onclick="changeMainImage(this.src)" >
+      <img src="bossagreensub1.jpg" class="thumb" onclick="changeMainImage(this.src)">
+      <img src="bossagreensub2.jpg" class="thumb" onclick="changeMainImage(this.src)">
+      필요하면 위에 복사해서 더 추가
   </div>
 </div>
 
-<div class="product-info">
+<div class="product-info">   설명자리
     <h1>Dancing Bossa Nova 1</h1>
     <p class="price">USD75</p>
     <p class="desc">Stoneware</p>
