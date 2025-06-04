@@ -219,7 +219,7 @@
     <!-- <a href="shop.html">← Back to shop</a> -->
 
     <!-- 이름과 가격 변경해주기-->
-<button onclick="button-cart('Dancing Bossa Nova 1', 75)">add to cart</button>
+<button class="button-cart" onclick="buttoncart('Dancing Bossa Nova 1', 75)">add to cart</button>
 
 <!-- 1. 수량 선택 + 버튼 자리 -->
  <!--<div style="margin-top: 32px; margin-bottom: 16px;">
@@ -271,7 +271,7 @@
 
 <!-- 장바구니 기능 자바스크립트-->
 <script>
-function addToCart(productName, price) {
+  function buttoncart(productName, price) {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   cart.push({ name: productName, price: price });
   localStorage.setItem('cart', JSON.stringify(cart));
