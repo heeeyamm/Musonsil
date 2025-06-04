@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
     toast.textContent = message;
     toast.classList.add("show");
 
+    toast.style.display = "block";
+
     setTimeout(() => {
         toast.classList.remove("show");
         setTimeout(() => {
@@ -14,8 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
         },300);
     }, 2000);
    }
-    toast.style.display = "block";
-
 
   // 🛒 장바구니에 상품 추가하는 함수
   window.buttoncart = function(productName, price) {
