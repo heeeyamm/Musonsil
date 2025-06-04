@@ -158,6 +158,22 @@
         margin-top: 32px;
     }
 
+    .button-cart {
+        background-color: #001f3f; /* 네이비 */
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: none;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+}
+
+    .button-cart:hover {
+        background-color: #6b9ac4; /* 연하늘색 */
+}
+</style>
+
   </style>
 </head>
 <script>
@@ -203,7 +219,7 @@
     <!-- <a href="shop.html">← Back to shop</a> -->
 
     <!-- 이름과 가격 변경해주기-->
-<button onclick="addToCart('butterfly Dish', 28.00)">add to cart</button>"
+<button onclick="addToCart('Dancing Bossa Nova 1', 75)">add to cart</button>
 
 <!-- 1. 수량 선택 + 버튼 자리 -->
  <!--<div style="margin-top: 32px; margin-bottom: 16px;">
@@ -255,11 +271,11 @@
 
 <!-- 장바구니 기능 자바스크립트-->
 <script>
-function addToCart(Dancing Bossa Nova 1, USD 75) {
+function addToCart(productName, price) {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  cart.push({ Dancing Bossa Nova 1, USD 75 });
+  cart.push({ name: productName, price: price });
   localStorage.setItem('cart', JSON.stringify(cart));
-  alert(`${Dancing Bossa Nova 1} Now added on cart!`);
+  alert(`${productName} is now added to cart!`);
 }
 </script>
   </div>
