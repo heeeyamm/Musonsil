@@ -55,7 +55,17 @@
     <a href="index.html" class="active">Shop</a>
     <a href="/archive.html">Archive</a>
     <a href="/about.html">About</a>
+    <a href="cart.html" id="cart-link"> Cart<span id="cart-count">(0)</span></a>
   </div>
 
 
   <script src="cart.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const countElem = document.getElementById('cart-count');
+    if (countElem) {
+      countElem.textContent = `(${cart.length})`;
+    }
+  });
+</script>
