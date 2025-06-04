@@ -23,6 +23,9 @@ document.addEventListener("DOMContentLoaded", function () {
     cart.push({ name: productName, price: price });
     localStorage.setItem('cart', JSON.stringify(cart));
 
+    //알림 토스트 띄우기 추가!
+    showToast("Added to cart!");
+
     // 메시지 UI 보여주기
     const notice = document.getElementById('cart-notice');
     if (notice) {
