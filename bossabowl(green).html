@@ -198,34 +198,6 @@
     <p class="desc">lead-free glaze, food safe, microwave safe and dishwasher safe (hand-wash recommended)</p>
     <!-- <a href="shop.html">← Back to shop</a> -->
 
-<!-- 1. PayPal SDK 로드 -->
-<script src="https://www.paypal.com/sdk/js?client-id=AUvVkHFonItx1uSMle2DyFTfg6IXS7CmQrObgR7zgm0dgNnDU-C-7e-itafcYOfENRwaZoE0_2uaQMV3&currency=USD"></script>
-
-<!-- 2. 버튼 위치 -->
-<div id="paypal-button-container"></div>
-
-<!-- 3. 버튼 동작 -->
-<script>
-  paypal.Buttons({
-    createOrder: function(data, actions) {
-      return actions.order.create({
-        purchase_units: [{
-          amount: {
-            value: '25.00'  // 여기 상품 가격!
-          },
-          description: "무손실 나비 접시"
-        }]
-      });
-    },
-    onApprove: function(data, actions) {
-      return actions.order.capture().then(function(details) {
-        alert('감사합니다, ' + details.payer.name.given_name + '님!');
-        // 성공 시 처리 추가 가능 (ex. 주문내역 저장)
-      });
-    }
-  }).render('#paypal-button-container');
-</script>
-
 <!-- 1. 수량 선택 + 버튼 자리 -->
 <label for="quantity">수량 선택:</label>
 <select id="quantity">
