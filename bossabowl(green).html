@@ -60,15 +60,12 @@
     }
 
     .product-image img {
-        width: 500px;
-        max-width: 100%;
+        width: 100%;
+        max-width: 500px;
         height: auto;
         object-fit: cover;
-    }
-
-    .product-image {
-        text-align: center;
-        margin-bottom: 20px;
+        display: block;
+        margin-bottom: 16px;
     }
 
     .product-info {
@@ -76,7 +73,7 @@
         font-size: 16px;
         line-height: 1.5;
         text-align: left;
-        color: #333
+        color:#001f3f
     }
 
     .product-info h1 {
@@ -163,12 +160,15 @@
   </div>
 
 <div class="product-detail"> 
+   <div class="product-left">
+    <div class="product-image"></div>
     <img id="mainImage" src="bossabowl.png" alt="Main Image" class="main-img" />
-    <div class="thumbnail-row"></div>
+    </div>
+
+    <div class="thumbnail-row">
       <img src="bossabowl.png" class="thumb" onclick="changeMainImage(this.src)" >
       <img src="bossagreensub1.jpg" class="thumb" onclick="changeMainImage(this.src)">
       <img src="bossagreensub2.jpg" class="thumb" onclick="changeMainImage(this.src)">
-     
   </div>
 </div>
 
