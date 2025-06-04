@@ -1,5 +1,6 @@
 // 🛒 상품을 장바구니에 추가하는 함수
 function buttoncart(productName, price) {
+    alert("버튼 누름 확인");
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   cart.push({ name: productName, price: price });
   localStorage.setItem('cart', JSON.stringify(cart));
