@@ -235,5 +235,41 @@
     }
   }).render('#paypal-button-container');
 </script>
+
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
+
+<script>
+  const productName = "Shine Slab Mug";
+  const pricePerItem = 80.00;
+
+  paypal.Buttons({
+    style: {
+      layout: 'vertical',
+      color: 'blue',      // 네이비 느낌
+      shape: 'rect',
+      label: 'pay',       // 깔끔한 텍스트
+      height: 40,         // 텍스트보다 살짝 큰 정도
+      tagline: false
+    },
+    createOrder: function(data, actions) {
+      const quantity = parseInt(document.getElementById("quantity").value);
+      const total = (pricePerItem * quantity).toFixed(2);
+
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: total
+          },
+          description: `${productName} x ${quantity}개`
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function(details) {
+        alert(`${details.payer.name.given_name}님, ${productName} ${document.getElementById("quantity").value}개 주문 감사합니다!`);
+      });
+    }
+  }).render('#paypal-button-container');
+</script>
   </div>
 </div>
