@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Musonsil Ceramics by Hazel</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      font-family: 'Helvetica Neue', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .logo {
+      margin-top: 60px;
+    }
+
+    .logo img {
+      width: 300px;
+      height: auto;
+    }
+
+    .nav {
+      margin-top: 25px;
+    }
+
+    .nav a {
+      display: inline-block;
+      margin: 0 10px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #001f3f; /* 네이비 색상 */
+      font-weight: normal; /* 볼드 제거 */
+      padding: 10px 15px;
+      transition: color 0.3s;
+      letter-spacing: 1.5px;
+    }
+
+    .nav a:hover {
+      color: #6b9ac4; /* 살짝 진한 네이비로 hover 효과 */
+    }
+    .nav a.active {
+        color: #6b9ac4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo">
+    <img src="logo.png" alt="Musonsil Logo">
+  </div>
+
+  <div class="nav">
+    <a href="index.html" class="active">Shop</a>
+    <a href="/archive.html">Archive</a>
+    <a href="/about.html">About</a>
+  </div>
+<body onload="loadCart()">
+    <h2>Cart</h2>
+    <ul id="cart-list"></ul>
+    <p class="total">total: USD<span id="cart-total">0</span></p>
+    <div id="paypal-button-container"></div>
+
+<script>
+    function loadCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const list = document.getElementById('cart-list');
+      const totalElem = document.getElementById('cart-total');
+      let total = 0;
+
+      if (cart.length === 0) {
+        list.innerHTML = '<p class="empty">장바구니가 비어있어요 😢</p>';
+        document.getElementById('paypal-button-container').style.display = 'none';
+        return;
+      }
+
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'cart-item';
+        li.innerHTML = `
+          <span>${item.name}</span>
+          <span>$${item.price.toFixed(2)}</span>
+        `;
+        list.appendChild(li);
+        total += item.price;
+      });
+
+      totalElem.textContent = total.toFixed(2);
+    }
+  </script>
+
+  <!-- PayPal 버튼 -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AUvVkHFonItx1uSMle2DyFTfg6IXS7CmQrObgR7zgm0dgNnDU-C-7e-itafcYOfENRwaZoE0_2uaQMV3&currency=USD"></script>
+  <script>
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: total.toFixed(2)
+            },
+            description: 'Proceed to checkout (for all itmes)'
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          alert(`${details.payer.name.given_name} your order is all set🤍 I'll start packing and send it your way soon. Thank you so much😊! `);
+          localStorage.removeItem('cart');
+          location.reload();
+        });
+      }
+    }).render('#paypal-button-container');
+  </script>
+</body>
+</html>
+</body>
