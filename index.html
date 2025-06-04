@@ -176,9 +176,24 @@
         <img src="Shinelovebowl.png" alt="제품8" />
         <p class="title">Shine Love Bowl</p>
         <p class="price">USD45</p>
+            <div class="product">
+       <a href="test.html" class="product">
+        <img src="bluecup.png" alt="제품6" />
+        <p class="title">Bluey</p>
+        <p class="price">USD80</p>
+       </a>
   </div>
 
 </body>
 </html>
 
 <script src="cart.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const countElem = document.getElementById('cart-count');
+    if (countElem) {
+      countElem.textContent = `(${cart.length})`;
+    }
+  });
+  </script>
