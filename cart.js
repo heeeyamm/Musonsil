@@ -1,6 +1,22 @@
 // HTML이 다 로드된 뒤에 실행되도록 설정
 document.addEventListener("DOMContentLoaded", function () {
   
+   //알림 띄우는 함수 먼저 정의
+   function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => {
+            toast.style.display = "none";
+        },300);
+    }, 2000);
+   }
+    toast.style.display = "block";
+
+
   // 🛒 장바구니에 상품 추가하는 함수
   window.buttoncart = function(productName, price) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
