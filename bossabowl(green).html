@@ -173,6 +173,27 @@
     .button-cart:hover {
         background-color: #6b9ac4; /* 연하늘색 */
 }
+
+    .toast {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #001f3f;
+        color: white;
+        padding: 12px 20px;
+        font-size: 14px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .toast.show {
+        display: block;
+        opacity: 1;
+    }
+    
 </style>
 
   </style>
@@ -278,4 +299,5 @@
   </div>
 </div>
 <script src="cart.js"></script>
+<div id="toast" style="display: none;">Added to cart!</div>
 </body>
