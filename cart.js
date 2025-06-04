@@ -38,6 +38,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const countElem = document.getElementById('cart-count');
+  if (countElem) {
+    countElem.textContent = `(${cart.length})`;
+  }
+}
+
   // 🧮 장바구니 수량 표시 (선택)
   window.updateCartCount = function () {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
