@@ -9,6 +9,11 @@
   <script src="/product.js" defer></script>
   <script src="/cart.js" defer></script>
 
+<style>
+    .product-page #product-container #cart-link {
+        display: none;
+    }
+</style>
 
   <!-- 상품 정보 설정 -->
   
@@ -83,6 +88,7 @@
   <div id="header-container"></div>
   <div id="product-container"></div>
 
+  <body class="product-page"></body>
   <!-- changeMainImage 함수는 body 안에서 등록해야 작동해 -->
   <script>
     function changeMainImage(src) {
