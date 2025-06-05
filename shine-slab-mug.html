@@ -250,6 +250,7 @@
 <div id="toast" class="toast" style="display: none;">Added to cart!</div>
 <script src="cart.js"></script>
 
+<script src="cart.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -258,5 +259,4 @@
       countElem.textContent = `(${cart.length})`;
     }
   });
-</script>
-</body>
+  </script>
