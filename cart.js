@@ -91,3 +91,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }).render('#paypal-button-container');
   }
 });
+
+function buttoncart(name, price, image) {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push({ name, price, image, quantity: 1 });
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  const toast = document.getElementById("toast");
+  if (toast) {
+    toast.style.display = "block";
+    setTimeout(() => toast.style.display = "none", 2000);
+  }
+}
