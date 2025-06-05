@@ -3,96 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <title>Cart</title>
+  <link rel="stylesheet" href="/cart-style.css">
+  <script src="https://www.paypal.com/sdk/js?client-id=AUvVkHFonItx1uSMle2DyFTfg6IXS7CmQrObgR7zgm0dgNnDU-C-7e-itafcYOfENRwaZoE0_2uaQMV3&currency=USD"></script>
+  <script defer src="/cart.js"></script>
   <style>
     body {
+      background-color: #f8f8f8;
       font-family: 'Helvetica Neue', sans-serif;
-      padding: 40px;
-      background-color: #fff;
       color: #001f3f;
-      max-width: 600px;
-      margin: auto;
+      padding: 40px;
     }
 
     h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
+      font-size: 28px;
+      margin-bottom: 30px;
     }
 
-    .item {
-      margin-bottom: 12px;
-      padding: 10px;
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       border-bottom: 1px solid #ddd;
+      padding: 16px 0;
     }
 
-    .btn {
-      padding: 10px 20px;
-      margin-top: 20px;
-      margin-right: 10px;
+    .cart-thumb {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      margin-right: 20px;
+    }
+
+    .cart-details {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .cart-name {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .cart-qty {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-btn {
+      padding: 4px 12px;
       background-color: #001f3f;
       color: white;
       border: none;
       cursor: pointer;
+      font-size: 16px;
     }
 
-    .btn:hover {
-      background-color: #004080;
+    .qty-btn:hover {
+      background-color: #6b9ac4;
     }
 
-        #cart-link {
-        font-size: 20px;
-        margin-left: 10px;
-        text-decoration: none;
-        color: #001f3f;
-        transition: color 0.3s ease;
+    .delete-btn {
+      background-color: #001f3f;
+      color: white;
+      padding: 6px 14px;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
     }
 
-    #cart-link:hover {
-        color: #6b9ac4;
+    .delete-btn:hover {
+      background-color: #6b9ac4;
+    }
+
+    .cart-total {
+      font-size: 20px;
+      margin-top: 24px;
+    }
+
+    #paypal-button-container {
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
 
-  <h1>🛒 /my cart</h1>
-  <div id="cart-items">로딩 중...</div>
-
-  <button class="btn" onclick="clearCart()">전체 삭제</button>
-  <button class="btn" onclick="location.href='index.html'">쇼핑 계속하기</button>
-
-  <script>
-    function loadCart() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const container = document.getElementById('cart-items');
-
-      if (cart.length === 0) {
-        container.innerHTML = "<p>장바구니가 비어있어요 😢</p>";
-        return;
-      }
-
-      let html = "";
-      cart.forEach((item, index) => {
-        html += `<div class="item">${index + 1}. ${item.name} - $${item.price}</div>`;
-      });
-
-      container.innerHTML = html;
-    }
-
-    function clearCart() {
-      localStorage.removeItem('cart');
-      loadCart();
-    }
-
-    document.addEventListener("DOMContentLoaded", loadCart);
-  </script>
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const countElem = document.getElementById('cart-count');
-    if (countElem) {
-      countElem.textContent = `(${cart.length})`;
-    }
-  });
-</script>
+  <h1>your cart</h1>
+  <div id="cart-items"></div>
+  <div id="cart-total" class="cart-total"></div>
+  <div id="paypal-button-container"></div>
 
 </body>
 </html>
