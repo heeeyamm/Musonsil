@@ -1,29 +1,21 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    
-    <script>
-    function changeMainImage(src) {
-        document.getElementById("mainImage").src = src;
-    }
-</script>
-
   <meta charset="UTF-8">
-  <title>test</title>
+  <title>Dancing Bossa Nova 1</title>
+
+  <!-- 공통 스크립트 -->
   <script src="/header.js" defer></script>
   <script src="/product.js" defer></script>
   <script src="/cart.js" defer></script>
-    <div id="header-container"></div>
-  <div id="product-container"></div>
+
+  <!-- 상품 정보 설정 -->
   <script>
     function setProductContent() {
-      // 제품 정보 설정
       document.getElementById("mainImage").src = "bossabowl.png";
       document.getElementById("product-title").textContent = "Dancing Bossa Nova 1";
       document.getElementById("product-price").textContent = "USD 75";
 
-      // 설명 여러 줄로 추가
       const descriptions = [
         "Stoneware",
         "Hand-built and painted",
@@ -39,23 +31,20 @@
         descContainer.appendChild(p);
       });
 
-      // 썸네일 이미지
       const thumbnails = ["bossabowl.png", "bossagreensub1.jpg", "bossagreensub2.jpg"];
       const thumbRow = document.getElementById("thumbnailRow");
       thumbnails.forEach(src => {
         const img = document.createElement("img");
         img.className = "thumb";
         img.src = src;
-        img.onclick = () => document.getElementById("mainImage").src = src;
+        img.onclick = () => changeMainImage(src);
         thumbRow.appendChild(img);
       });
 
-      // 장바구니 버튼
       document.getElementById("addToCartBtn").onclick = function () {
         buttoncart("Dancing Bossa Nova 1", 75);
       };
 
-      // PayPal 버튼
       paypal.Buttons({
         style: {
           layout: 'vertical',
@@ -68,9 +57,7 @@
         createOrder: function(data, actions) {
           return actions.order.create({
             purchase_units: [{
-              amount: {
-                value: '75.00'
-              },
+              amount: { value: '75.00' },
               description: 'Dancing Bossa Nova 1'
             }]
           });
@@ -83,7 +70,20 @@
       }).render('#paypal-button-container');
     }
   </script>
+
+  <!-- PayPal SDK는 이 안에 한 번만 -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AUvVkHFonItx1uSMle2DyFTfg6IXS7CmQrObgR7zgm0dgNnDU-C-7e-itafcYOfENRwaZoE0_2uaQMV3&currency=USD&locale=en_US"></script>
 </head>
+
 <body>
+  <div id="header-container"></div>
+  <div id="product-container"></div>
+
+  <!-- changeMainImage 함수는 body 안에서 등록해야 작동해 -->
+  <script>
+    function changeMainImage(src) {
+      document.getElementById("mainImage").src = src;
+    }
+  </script>
 </body>
 </html>
