@@ -10,11 +10,25 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("addToCartBtn");
+  if (btn) {
+    btn.onclick = () => {
+      const name = btn.dataset.name;
+      const price = parseFloat(btn.dataset.price);
+      const image = btn.dataset.image;
+
+      buttoncart(name, price, image);
+      showToast();
+    };
+  }
+});
 
 function showToast() {
   const toast = document.getElementById("toast");
-  toast.style.display = "block";
+  if (!toast) return;
+  toast.classList.add("show");
   setTimeout(() => {
-    toast.style.display = "none";
+    toast.classList.remove("show");
   }, 2000);
 }
