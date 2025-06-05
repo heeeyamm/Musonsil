@@ -1,4 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>test</title>
+  <script src="/header.js" defer></script>
+</head>
 <body>
-    <div id="header-container"></div>
-    <script src="header.js"></script>
+  <div id="header-container"></div>
+
+  <!-- 본문 내용 시작 -->
+  <div>
+    <!-- 여기에 제품 이미지나 설명 등 각 페이지 고유 내용만 작성! -->
+
+    <div class="product-detail"> 
+  
+    <div class="product-left">
+    <div class="product-image"> <!-- 썸네이 사진-->
+    <img id="mainImage" src="bossabowl.png" alt="Main Image" class="main-img" />
+    </div>
+
+    <div class="thumbnail-row">  <!--썸네일 사진 및 밑에 보조사진-->
+      <img src="bossabowl.png" class="thumb" onclick="changeMainImage(this.src)" >
+      <img src="bossagreensub1.jpg" class="thumb" onclick="changeMainImage(this.src)">
+      <img src="bossagreensub2.jpg" class="thumb" onclick="changeMainImage(this.src)">
+  </div>
+</div>
+
+<div class="product-info">  <!-- 상품이름 및 정보 수정하기-->
+    <h1>Dancing Bossa Nova 1</h1>
+    <p class="price">USD75</p>
+    <p class="desc">Stoneware</p>
+    <p class="desc">Hand-built and painted</p>
+    <p class="desc">approx 7x8x10 (cm)</p>
+    <p class="desc">holds 10oz</p>
+    <p class="desc">lead-free glaze, food safe, microwave safe and dishwasher safe (hand-wash recommended)</p>
+    <!-- <a href="shop.html">← Back to shop</a> -->
+
+    <!-- 이름과 가격(숫자만쓰기)변경해주기-->
+<button class="button-cart" onclick="buttoncart('Dancing Bossa Nova 1', 75)">add to cart</button>
+
+<!-- 1. 수량 선택 + 버튼 자리 -->
+ <!--<div style="margin-top: 32px; margin-bottom: 16px;">
+<label for="quantity" style="display: block; margin-bottom: 6px;"> Quantity:</label>
+<input type="number" id="quantity" name="quantity" value="1" min="1" style="width: 60px; padding: 6px;" />
+</div> -->
+
+<div class="paypal-button-wrap">
+    <div id="paypal-button-container"> </div>
+    </div>
+
+<div id="paypal-button-container"></div>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AUvVkHFonItx1uSMle2DyFTfg6IXS7CmQrObgR7zgm0dgNnDU-C-7e-itafcYOfENRwaZoE0_2uaQMV3&currency=USD&locale=en_US"></script>
+
+<script>
+  const productName = "Shine Slab Mug";
+  const pricePerItem = 80.00;
+
+  paypal.Buttons({
+    style: {
+      layout: 'vertical',
+      color: 'blue',      // 네이비 느낌
+      shape: 'rect',
+      label: 'pay',       // 깔끔한 텍스트
+      height: 40,         // 텍스트보다 살짝 큰 정도
+      tagline: false
+    },
+    createOrder: function(data, actions) {
+      const quantity = parseInt(document.getElementById("quantity").value);
+      const total = (pricePerItem * quantity).toFixed(2);
+
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: total
+          },
+          description: `${productName} x ${quantity}개`
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function(details) {
+        alert(`${details.payer.name.given_name}님, ${productName} ${document.getElementById("quantity").value}개 주문 감사합니다!`);
+      });
+    }
+  }).render('#paypal-button-container');
+</script>
+  </div>
 </body>
+</html>
