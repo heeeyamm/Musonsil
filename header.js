@@ -1,3 +1,5 @@
+console.log("header loaded");
+
 fetch('/header.html')
   .then(res => res.text())
   .then(data => {
