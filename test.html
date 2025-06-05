@@ -16,68 +16,79 @@
 </style>
 
   <!-- 상품 정보 설정 -->
-  
   <script>
-    function setProductContent() {
-      document.getElementById("mainImage").src = "bossabowl.png";
-      document.getElementById("product-title").textContent = "Dancing Bossa Nova 1";
-      document.getElementById("product-price").textContent = "USD 75";
+function setProductContent() {
+  document.getElementById("mainImage").src = "bossabowl.png";
+  document.getElementById("product-title").textContent = "Dancing Bossa Nova 1";
+  document.getElementById("product-price").textContent = "USD 75";
 
-      const descriptions = [
-        "Stoneware",
-        "Hand-built and painted",
-        "approx 7x8x10 (cm)",
-        "holds 10oz",
-        "lead-free glaze, food safe, microwave safe and dishwasher safe (hand-wash recommended)"
-      ];
-      const descContainer = document.getElementById("product-description");
-      descriptions.forEach(text => {
-        const p = document.createElement("p");
-        p.className = "desc";
-        p.textContent = text;
-        descContainer.appendChild(p);
+  const descriptions = [
+    "Stoneware",
+    "Hand-built and painted",
+    "approx 7x8x10 (cm)",
+    "holds 10oz",
+    "lead-free glaze, food safe, microwave safe and dishwasher safe (hand-wash recommended)"
+  ];
+  const descContainer = document.getElementById("product-description");
+  descriptions.forEach(text => {
+    const p = document.createElement("p");
+    p.className = "desc";
+    p.textContent = text;
+    descContainer.appendChild(p);
+  });
+
+  const thumbnails = ["bossabowl.png", "bossagreensub1.jpg", "bossagreensub2.jpg"];
+  const thumbRow = document.getElementById("thumbnailRow");
+  thumbnails.forEach(src => {
+    const img = document.createElement("img");
+    img.className = "thumb";
+    img.src = src;
+    img.onclick = () => changeMainImage(src);
+    thumbRow.appendChild(img);
+  });
+
+  // ✅ 여기 토스트 함수 정의 (안에 넣어도 돼!)
+  function showToast() {
+    const toast = document.getElementById("toast");
+    if (!toast) return;
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2000);
+  }
+
+  // ✅ Add to Cart 버튼 이벤트에 토스트도 같이 실행
+  document.getElementById("addToCartBtn").onclick = function () {
+    buttoncart("Dancing Bossa Nova 1", 75, "bossabowl.png");
+    showToast();
+  };
+
+  // 페이팔 버튼은 그대로
+  paypal.Buttons({
+    style: {
+      layout: 'vertical',
+      color: 'blue',
+      shape: 'rect',
+      label: 'pay',
+      height: 40,
+      tagline: false
+    },
+    createOrder: function (data, actions) {
+      return actions.order.create({
+        purchase_units: [{
+          amount: { value: '75.00' },
+          description: 'Dancing Bossa Nova 1'
+        }]
       });
-
-      const thumbnails = ["bossabowl.png", "bossagreensub1.jpg", "bossagreensub2.jpg"];
-      const thumbRow = document.getElementById("thumbnailRow");
-      thumbnails.forEach(src => {
-        const img = document.createElement("img");
-        img.className = "thumb";
-        img.src = src;
-        img.onclick = () => changeMainImage(src);
-        thumbRow.appendChild(img);
+    },
+    onApprove: function (data, actions) {
+      return actions.order.capture().then(function (details) {
+        alert(`${details.payer.name.given_name}, thank you for your order!`);
       });
-
-      document.getElementById("addToCartBtn").onclick = function () {
-        buttoncart("Dancing Bossa Nova 1", 75);
-      };
-
-      paypal.Buttons({
-        style: {
-          layout: 'vertical',
-          color: 'blue',
-          shape: 'rect',
-          label: 'pay',
-          height: 40,
-          tagline: false
-        },
-        createOrder: function(data, actions) {
-          return actions.order.create({
-            purchase_units: [{
-              amount: { value: '75.00' },
-              description: 'Dancing Bossa Nova 1'
-            }]
-          });
-        },
-        onApprove: function(data, actions) {
-          return actions.order.capture().then(function(details) {
-            alert(`${details.payer.name.given_name}, thank you for your order!`);
-          });
-        }
-      }).render('#paypal-button-container');
     }
-  </script>
-
+  }).render('#paypal-button-container');
+}
+</script>
   <!-- PayPal SDK는 이 안에 한 번만 -->
   <script src="https://www.paypal.com/sdk/js?client-id=AUvVkHFonItx1uSMle2DyFTfg6IXS7CmQrObgR7zgm0dgNnDU-C-7e-itafcYOfENRwaZoE0_2uaQMV3&currency=USD&locale=en_US"></script>
 </head>
