@@ -259,6 +259,20 @@
   add to cart
 </button>
 
+<script>
+function buttoncart(name, price, image) {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push({ name, price, image, quantity: 1 });
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  const toast = document.getElementById("toast");
+  if (toast) {
+    toast.style.display = "block";
+    setTimeout(() => toast.style.display = "none", 2000);
+  }
+}
+</script>
+
 <!--1. 수량 선택 + 버튼 자리 -->
  <!--<div style="margin-top: 32px; margin-bottom: 16px;">
 <label for="quantity" style="display: block; margin-bottom: 6px;"> Quantity:</label>
