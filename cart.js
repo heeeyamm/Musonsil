@@ -1,57 +1,93 @@
-// HTML이 다 로드된 뒤에 실행되도록 설정
-document.addEventListener("DOMContentLoaded", function () {
-  
-   //알림 띄우는 함수 먼저 정의
-   function showToast(message) {
-    const toast = document.getElementById("toast");
-    toast.textContent = message;
-    toast.classList.add("show");
+document.addEventListener("DOMContentLoaded", () => {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const container = document.getElementById("cart-items");
+  const totalDisplay = document.getElementById("cart-total");
 
-    toast.style.display = "block";
+  let total = 0;
 
-    setTimeout(() => {
-        toast.classList.remove("show");
-        setTimeout(() => {
-            toast.style.display = "none";
-        },300);
-    }, 2000);
-   }
+  cart.forEach((item, index) => {
+    const itemEl = document.createElement("div");
+    itemEl.className = "cart-item";
 
-  // 🛒 장바구니에 상품 추가하는 함수
-  window.buttoncart = function(productName, price) {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.push({ name: productName, price: price });
-    localStorage.setItem('cart', JSON.stringify(cart));
+    const img = document.createElement("img");
+    img.src = item.image;
+    img.alt = item.name;
+    img.className = "cart-thumb";
 
-    //알림 토스트 띄우기 추가!
-    showToast("Added to cart!");
+    const details = document.createElement("div");
+    details.className = "cart-details";
 
-    // 메시지 UI 보여주기
-    const notice = document.getElementById('cart-notice');
-    if (notice) {
-      notice.style.display = 'block';
-    }
+    const name = document.createElement("div");
+    name.className = "cart-name";
+    name.textContent = item.name;
 
-    // 선택사항: 장바구니 수량 업데이트
-    if (typeof updateCartCount === 'function') {
-      updateCartCount();
-    }
-  }
+    const price = document.createElement("div");
+    price.textContent = `$${item.price}`;
 
-function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const countElem = document.getElementById('cart-count');
-  if (countElem) {
-    countElem.textContent = `(${cart.length})`;
-  }
-}
+    const qtyBox = document.createElement("div");
+    qtyBox.className = "cart-qty";
 
-  // 🧮 장바구니 수량 표시 (선택)
-  window.updateCartCount = function () {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const countElem = document.getElementById('cart-count');
-    if (countElem) {
-      countElem.textContent = cart.length;
-    }
+    const minus = document.createElement("button");
+    minus.textContent = "-";
+    minus.className = "qty-btn";
+    minus.onclick = () => {
+      if (cart[index].quantity > 1) {
+        cart[index].quantity--;
+        localStorage.setItem("cart", JSON.stringify(cart));
+        location.reload();
+      }
+    };
+
+    const qty = document.createElement("span");
+    qty.textContent = item.quantity || 1;
+
+    const plus = document.createElement("button");
+    plus.textContent = "+";
+    plus.className = "qty-btn";
+    plus.onclick = () => {
+      cart[index].quantity = (cart[index].quantity || 1) + 1;
+      localStorage.setItem("cart", JSON.stringify(cart));
+      location.reload();
+    };
+
+    const remove = document.createElement("button");
+    remove.textContent = "delete";
+    remove.className = "delete-btn";
+    remove.onclick = () => {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      location.reload();
+    };
+
+    qtyBox.append(minus, qty, plus);
+    details.append(name, price, qtyBox, remove);
+    itemEl.append(img, details);
+    container.appendChild(itemEl);
+
+    total += item.price * (item.quantity || 1);
+  });
+
+  totalDisplay.textContent = `Total: $${total.toFixed(2)}`;
+
+  if (cart.length > 0) {
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: total.toFixed(2)
+            },
+            description: "Order from Musonsil Studio"
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          alert(`${details.payer.name.given_name}, thank you for your order!`);
+          localStorage.removeItem("cart");
+          location.href = "/";
+        });
+      }
+    }).render('#paypal-button-container');
   }
 });
