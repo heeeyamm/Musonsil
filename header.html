@@ -1,0 +1,55 @@
+<!-- header.html -->
+<div class="logo">
+  <img src="logo.png" alt="Musonsil Logo">
+</div>
+
+<div class="nav">
+  <a href="index.html" class="active">Shop</a>
+  <a href="/archive.html">Archive</a>
+  <a href="/about.html">About</a>
+  <a href="/cart.html" id="cart-link">Cart<span id="cart-count">(0)</span></a>
+</div>
+
+<style>
+  .logo {
+    margin-top: 60px;
+  }
+
+  .logo img {
+    width: 300px;
+    height: auto;
+  }
+
+  .nav {
+    margin-top: 25px;
+  }
+
+  .nav a {
+    display: inline-block;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #001f3f;
+    font-weight: normal;
+    padding: 10px 15px;
+    transition: color 0.3s;
+    letter-spacing: 1.5px;
+  }
+
+  .nav a:hover {
+    color: #6b9ac4;
+  }
+
+  .nav a.active {
+    color: #6b9ac4;
+  }
+</style>
+
+<script>
+  // 장바구니 수량 표시
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const countElem = document.getElementById('cart-count');
+  if (countElem) {
+    countElem.textContent = `(${cart.length})`;
+  }
+</script>

@@ -13,3 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   document.getElementById("common-header").innerHTML = headerHTML;
 });
+
+fetch('/header.html')
+ .then(res => res.text())
+ .then(date => {
+    document.getElementById('header-container').innerHTML = DataTransfer;
+ })
