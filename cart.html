@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>장바구니</title>
+  <title>Cart</title>
   <style>
     body {
       font-family: 'Helvetica Neue', sans-serif;
@@ -37,11 +37,23 @@
     .btn:hover {
       background-color: #004080;
     }
+
+        #cart-link {
+        font-size: 20px;
+        margin-left: 10px;
+        text-decoration: none;
+        color: #001f3f;
+        transition: color 0.3s ease;
+    }
+
+    #cart-link:hover {
+        color: #6b9ac4;
+    }
   </style>
 </head>
 <body>
 
-  <h1>🛒 내 장바구니</h1>
+  <h1>🛒 /my cart</h1>
   <div id="cart-items">로딩 중...</div>
 
   <button class="btn" onclick="clearCart()">전체 삭제</button>
@@ -72,6 +84,15 @@
 
     document.addEventListener("DOMContentLoaded", loadCart);
   </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const countElem = document.getElementById('cart-count');
+    if (countElem) {
+      countElem.textContent = `(${cart.length})`;
+    }
+  });
+</script>
 
 </body>
 </html>
