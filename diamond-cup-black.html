@@ -43,6 +43,18 @@
     .nav a.active {
         color: #6b9ac4;
     }
+
+        #cart-link {
+        font-size: 20px;
+        margin-left: 10px;
+        text-decoration: none;
+        color: #001f3f;
+        transition: color 0.3s ease;
+    }
+
+    #cart-link:hover {
+        color: #6b9ac4;
+    }
   </style>
 </head>
 <body>
@@ -55,7 +67,18 @@
     <a href="index.html" class="active">Shop</a>
     <a href="/archive.html">Archive</a>
     <a href="/about.html">About</a>
+    <a href="/cart.html" id="cart-link"> Cart<span id="cart-count">(0)</span></a>
   </div>
 
 
   <script src="cart.js"></script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const countElem = document.getElementById('cart-count');
+    if (countElem) {
+      countElem.textContent = `(${cart.length})`;
+    }
+  });
+</script>
