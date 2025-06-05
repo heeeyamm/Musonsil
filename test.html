@@ -2,22 +2,74 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>test</title>
-  <script src="/header.js" defer></script>
-</head>
-<body>
-
-<head></head>
-  <div id="header-container"></div>
-
+  <title>Dancing Bossa Nova 1</title>
+  <script src="/product.js" defer></script>
+  <script src="/cart.js" defer></script>
   <script>
     function setProductContent() {
-      document.getElementById('mainImage').src = 'images/bossa1_main.jpg';
-      document.querySelectorAll('.thumbnails img')[0].src = 'images/bossa1_thumb1.jpg';
-      document.querySelectorAll('.thumbnails img')[1].src = 'images/bossa1_thumb2.jpg';
-      document.getElementById('product-title').textContent = 'Dancing Bossa Nova 1';
-      document.getElementById('product-description').textContent = '보사노바 소녀가 춤추는 유니크한 비정형 그릇입니다.';
-      document.getElementById('product-price').textContent = '₩33,000';
+      // 제품 정보 설정
+      document.getElementById("mainImage").src = "bossabowl.png";
+      document.getElementById("product-title").textContent = "Dancing Bossa Nova 1";
+      document.getElementById("product-price").textContent = "USD 75";
+
+      // 설명 여러 줄로 추가
+      const descriptions = [
+        "Stoneware",
+        "Hand-built and painted",
+        "approx 7x8x10 (cm)",
+        "holds 10oz",
+        "lead-free glaze, food safe, microwave safe and dishwasher safe (hand-wash recommended)"
+      ];
+      const descContainer = document.getElementById("product-description");
+      descriptions.forEach(text => {
+        const p = document.createElement("p");
+        p.className = "desc";
+        p.textContent = text;
+        descContainer.appendChild(p);
+      });
+
+      // 썸네일 이미지
+      const thumbnails = ["bossabowl.png", "bossagreensub1.jpg", "bossagreensub2.jpg"];
+      const thumbRow = document.getElementById("thumbnailRow");
+      thumbnails.forEach(src => {
+        const img = document.createElement("img");
+        img.className = "thumb";
+        img.src = src;
+        img.onclick = () => document.getElementById("mainImage").src = src;
+        thumbRow.appendChild(img);
+      });
+
+      // 장바구니 버튼
+      document.getElementById("addToCartBtn").onclick = function () {
+        buttoncart("Dancing Bossa Nova 1", 75);
+      };
+
+      // PayPal 버튼
+      paypal.Buttons({
+        style: {
+          layout: 'vertical',
+          color: 'blue',
+          shape: 'rect',
+          label: 'pay',
+          height: 40,
+          tagline: false
+        },
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: '75.00'
+              },
+              description: 'Dancing Bossa Nova 1'
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            alert(`${details.payer.name.given_name}, thank you for your order!`);
+          });
+        }
+      }).render('#paypal-button-container');
     }
   </script>
 </head>
