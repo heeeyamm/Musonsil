@@ -16,3 +16,77 @@
       document.getElementById("product-title").textContent = "testing";
       document.getElementById("product-price").textContent = "USD 55";
     }
+
+
+      const descriptions = [
+        "Stoneware",
+        "Hand-built and painted",
+        "approx 7x8x10 (cm)",
+        "holds 10oz",
+        "lead-free glaze, food safe, microwave safe and dishwasher safe (hand-wash recommended)"
+      ];
+      const descContainer = document.getElementById("product-description");
+      descriptions.forEach(text => {
+        const p = document.createElement("p");
+        p.className = "desc";
+        p.textContent = text;
+        descContainer.appendChild(p);
+      });
+
+      const thumbnails = ["bossabowl.png", "bossagreensub1.jpg", "bossagreensub2.jpg"];
+      const thumbRow = document.getElementById("thumbnailRow");
+      thumbnails.forEach(src => {
+        const img = document.createElement("img");
+        img.className = "thumb";
+        img.src = src;
+        img.onclick = () => changeMainImage(src);
+        thumbRow.appendChild(img);
+      });
+
+      document.getElementById("addToCartBtn").onclick = function () {
+        buttoncart("Dancing Bossa Nova 1", 75);
+      };
+
+      paypal.Buttons({
+        style: {
+          layout: 'vertical',
+          color: 'blue',
+          shape: 'rect',
+          label: 'pay',
+          height: 40,
+          tagline: false
+        },
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: { value: '75.00' },
+              description: 'Dancing Bossa Nova 1'
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            alert(`${details.payer.name.given_name}, thank you for your order!`);
+          });
+        }
+      }).render('#paypal-button-container');
+  </script>
+
+  <!-- PayPal SDK는 이 안에 한 번만 -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AUvVkHFonItx1uSMle2DyFTfg6IXS7CmQrObgR7zgm0dgNnDU-C-7e-itafcYOfENRwaZoE0_2uaQMV3&currency=USD&locale=en_US"></script>
+</head>
+
+<div id="toast" class="toast" style="display: none;">Added to cart!</div>
+
+<body>
+  <div id="header-container"></div>
+  <div id="product-container"></div>
+
+  <!-- changeMainImage 함수는 body 안에서 등록해야 작동해 -->
+  <script>
+    function changeMainImage(src) {
+      document.getElementById("mainImage").src = src;
+    }
+  </script>
+</body>
+</html>
