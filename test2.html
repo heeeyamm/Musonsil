@@ -9,12 +9,14 @@
   <script src="/product.js" defer></script>
   <script src="/cart.js" defer></script>
 
+
   <!-- 상품 정보 설정 -->
+  
   <script>
     function setProductContent() {
       document.getElementById("mainImage").src = "bossabowl.png";
-      document.getElementById("product-title").textContent = "testing";
-      document.getElementById("product-price").textContent = "USD 55";
+      document.getElementById("product-title").textContent = "Dancing Bossa Nova 1";
+      document.getElementById("product-price").textContent = "USD 75";
 
       const descriptions = [
         "Stoneware",
@@ -68,6 +70,7 @@
           });
         }
       }).render('#paypal-button-container');
+    }
   </script>
 
   <!-- PayPal SDK는 이 안에 한 번만 -->
@@ -85,7 +88,6 @@
     function changeMainImage(src) {
       document.getElementById("mainImage").src = src;
     }
-}
   </script>
 </body>
 </html>
