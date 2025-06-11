@@ -49,6 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("cart", JSON.stringify(cart));
       location.reload();
     };
+    if ((item.quantity || 1) >= 1) {
+  plus.style.display = "none"; // 버튼 아예 숨기기
+}
 
     const remove = document.createElement("button");
     remove.textContent = "delete";
@@ -102,16 +105,17 @@ document.addEventListener("DOMContentLoaded", () => {
 function buttoncart(name, price, image) {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+  //이미 같은 상품이 장바구니에 있으면 막기
   const existingItem = cart.find(item => item.name === name);
 
   if (existingItem) {
-    existingItem.quantity = (existingItem.quantity || 1) + 1;
-  } else {
-    cart.push({ name, price, image, quantity: 1 });
+    alert("You can only add one of this item.");
+    return;
   }
-
+  //새로운 상품이면 추가
+    cart.push({ name, price, image, quantity: 1 });
   localStorage.setItem("cart", JSON.stringify(cart));
-
+  //토스트 알림
   const toast = document.getElementById("toast");
   if (toast) {
     toast.style.display = "block";
