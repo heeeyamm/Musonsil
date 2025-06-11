@@ -58,10 +58,23 @@ function setProductContent() {
   }
 
   // ✅ Add to Cart 버튼 이벤트에 토스트도 같이 실행
-  document.getElementById("addToCartBtn").onclick = function () {
-    buttoncart("Dancing Bossa Nova 1", 75, "bossabowl.png");
-    showToast();
-  };
+document.getElementById("addToCartBtn").onclick = function () {
+  fetch("https://script.google.com/macros/s/AKfycbx7I9vegp-PLKNXbFI0ZTQNPixArUtrObdh36-2MkpKzB3w0HKPZ8OTQEyYdMh47IS5/exec?name=Dancing Bossa Nova 1")
+    .then(res => res.json())
+    .then(data => {
+      if (data.stock > 0) {
+        //이부분 이름 같은거 구글 시트에랑 이름 똑같아야함. 그리고 가격은 숫자만 표기하고 달러표기 하지말것)
+        buttoncart("Dancing Bossa Nova 1", 75, "bossabowl.png");
+        showToast();
+      } else {
+        alert("Sorry, this item is sold out!");
+      }
+    })
+    .catch(err => {
+      console.error("재고 확인 실패", err);
+      alert("Something went wrong while checking stock.");
+    });
+};
 
   // 페이팔 버튼은 그대로
   paypal.Buttons({
