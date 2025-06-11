@@ -71,6 +71,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (cart.length > 0) {
     paypal.Buttons({
+      style: {
+        layout: 'vertical',
+        color: 'navy', // ✅ 여기 바뀐 부분!
+        shape: 'rect',
+        label: 'pay',
+        height: 40
+      },
       createOrder: function(data, actions) {
         return actions.order.create({
           purchase_units: [{
@@ -95,20 +102,16 @@ document.addEventListener("DOMContentLoaded", () => {
 function buttoncart(name, price, image) {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // 기존 항목 중 name이 같은 게 있는지 찾기
   const existingItem = cart.find(item => item.name === name);
 
   if (existingItem) {
-    // 이미 장바구니에 있는 상품이면 수량만 증가
     existingItem.quantity = (existingItem.quantity || 1) + 1;
   } else {
-    // 새로운 상품이면 새로 추가
     cart.push({ name, price, image, quantity: 1 });
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  // 토스트 알림
   const toast = document.getElementById("toast");
   if (toast) {
     toast.style.display = "block";
