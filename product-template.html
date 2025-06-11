@@ -1,4 +1,5 @@
 <!-- product-template.html -->
+
  <link rel="stylesheet" href="/product-style.css">
 <div class="product-detail"> 
   <div class="product-left">
@@ -11,6 +12,10 @@
     </div>
   </div>
 
+  <body>
+  <div id="header-container"></div>
+  <!-- 나머지 본문은 여기에 -->
+   
   <div class="product-info">
     <h1 id="product-title"></h1>
     <p class="price" id="product-price"></p>
@@ -19,12 +24,11 @@
     </div>
 
     <button class="button-cart" id="addToCartBtn">add to cart</button>
-    <a href="/cart.html" id="cart-link">Cart<span id="cart-count">(0)</span></a>
-
-    <div id="toast" class="toast" style="display: none;">Added to cart!</div>
 
     <div class="paypal-button-wrap">
       <div id="paypal-button-container"></div>
+
+    <div id="toast" class="toast" style="display: none;">Added to cart!</div>
     </div>
   </div>
 </div>
