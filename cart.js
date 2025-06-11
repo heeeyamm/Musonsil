@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     paypal.Buttons({
       style: {
         layout: 'vertical',
-        color: 'navy', // ✅ 여기 바뀐 부분!
+        color: 'blue', // ✅ 여기 바뀐 부분!
         shape: 'rect',
         label: 'pay',
         height: 40
