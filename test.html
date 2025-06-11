@@ -75,6 +75,21 @@ document.getElementById("addToCartBtn").onclick = function () {
       alert("Something went wrong while checking stock.");
     });
 };
+// ✅ 페이지 로딩 시 재고 확인해서 Sold Out 처리
+fetch("https://script.google.com/macros/s/AKfycbx7I9vegp-PLKNXbFI0ZTQNPixArUtrObdh36-2MkpKzB3w0HKPZ8OTQEyYdMh47IS5/exec?name=Dancing Bossa Nova 1")
+  .then(res => res.json())
+  .then(data => {
+    if (data.stock <= 0) {
+      // 버튼 숨기기
+      document.getElementById("addToCartBtn").style.display = "none";
+
+      // Sold Out 텍스트 보이기
+      document.getElementById("sold-out-text").style.display = "block";
+    }
+  })
+  .catch(err => {
+    console.error("재고 확인 실패", err);
+  });
 
   // 페이팔 버튼은 그대로
   paypal.Buttons({
