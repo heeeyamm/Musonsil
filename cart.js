@@ -41,6 +41,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const qty = document.createElement("span");
     qty.textContent = item.quantity || 1;
 
+    fetch(`https://script.google.com/macros/s/AKfycbx7I9vegp-PLKNXbFI0ZTQNPixArUtrObdh36-2MkpKzB3w0HKPZ8OTQEyYdMh47IS5/exec?name=${encodeURIComponent(item.name)}&qty=${qty}`)
+    .then(res => res.text())
+    .then(response => {
+      console.log("Sheet update response:", response);
+    });
+
+
     const plus = document.createElement("button");
     plus.textContent = "+";
     plus.className = "qty-btn";
