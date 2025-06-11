@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const qty = document.createElement("span");
     qty.textContent = item.quantity || 1;
 
-    fetch(`https://script.google.com/macros/s/AKfycbx7I9vegp-PLKNXbFI0ZTQNPixArUtrObdh36-2MkpKzB3w0HKPZ8OTQEyYdMh47IS5/exec?name=${encodeURIComponent(item.name)}&qty=${qty}`)
+    fetch(`https://script.google.com/macros/library/d/19vZxbl9n9gKvlMfI28jF_U1eaD0ZF1ZddDHS4LgkhAHXOj7BEORMX6xC/1${encodeURIComponent(item.name)}&qty=${qty}`)
     .then(res => res.text())
     .then(response => {
       console.log("Sheet update response:", response);
