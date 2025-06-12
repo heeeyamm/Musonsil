@@ -1,34 +1,7 @@
-// 페이지 로드 시 템플릿 불러오기
-document.addEventListener('DOMContentLoaded', () => {
-  fetch('/product-template.html')
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById('product-container').innerHTML = html;
-
-      // header.js 직접 로드
-      const script = document.createElement("script");
-      script.src = "/header.js";
-      document.body.appendChild(script);
-
-      if (typeof setProductContent === 'function') {
-        setProductContent();
-      }
-    });
-});
-
-// 토스트 알림 함수
-function showToast() {
-  const toast = document.getElementById("toast");
-  if (!toast) return;
-  toast.classList.add("show");
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2000);
-}
-
-// 장바구니 담기 함수
+// ✅ 1. 장바구니에 담기 함수
 function buttoncart(name, price, image) {
   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
   const existingItem = cart.find(item => item.name === name);
 
   if (existingItem) {
@@ -39,11 +12,22 @@ function buttoncart(name, price, image) {
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  // 토스트 표시
-  showToast();
+  const toast = document.getElementById("toast");
+  if (toast) {
+    toast.style.display = "block";
+    setTimeout(() => (toast.style.display = "none"), 2000);
+  }
 }
 
-// 재고 확인 함수 + 버튼 표시 + 클릭 이벤트 연결
+// ✅ 2. 토스트 전용 함수 (CSS 클래스 방식 쓸 경우)
+function showToast() {
+  const toast = document.getElementById("toast");
+  if (!toast) return;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+// ✅ 3. 재고 확인 + 버튼 처리
 function checkStock(productName) {
   fetch(`https://script.google.com/macros/s/AKfycbzb8ukfcIHa4BTYnbeSzzgaWFsWn492l1jcxxsnVGnc_jJpuIA1eJygotLZRTIP64i-/exec?name=${encodeURIComponent(productName)}`)
     .then(res => res.json())
@@ -79,10 +63,28 @@ function checkStock(productName) {
           }
 
           buttoncart(name, price, image);
+          showToast();
         };
       }
     })
-    .catch(error => {
-      console.error("재고 확인 실패:", error);
+    .catch(err => {
+      console.error("재고 확인 오류:", err);
     });
 }
+
+// ✅ 4. 템플릿 로드 및 상품 설정
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("/product-template.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("product-container").innerHTML = html;
+
+      const script = document.createElement("script");
+      script.src = "/header.js";
+      document.body.appendChild(script);
+
+      if (typeof setProductContent === "function") {
+        setProductContent();
+      }
+    });
+});
