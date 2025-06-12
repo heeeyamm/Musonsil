@@ -22,7 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
           const price = parseFloat(btn.dataset.price);
           const image = btn.dataset.image;
 
-          buttoncart(name, price, image);
+          console.log("카트로 보낼 값", name, price, image);
+
+          buttoncart(name, price, image); //이 함수가 카트에 넣음
           showToast();
         };
       }
