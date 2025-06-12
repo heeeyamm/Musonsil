@@ -11,11 +11,12 @@ function setProductContent() {
     "lead-free glaze, food safe, microwave safe and dishwasher safe (hand-wash recommended)"
   ];
 
-  // DOM 주입
+  // 제목, 이미지, 가격
   document.getElementById("product-title").textContent = name;
   document.getElementById("product-price").textContent = `USD ${price}`;
   document.getElementById("mainImage").src = image;
 
+  // 설명 삽입
   const descContainer = document.getElementById("product-description");
   descriptions.forEach(text => {
     const p = document.createElement("p");
@@ -24,6 +25,7 @@ function setProductContent() {
     descContainer.appendChild(p);
   });
 
+  // 썸네일 삽입
   const thumbRow = document.getElementById("thumbnailRow");
   thumbnails.forEach(src => {
     const img = document.createElement("img");
@@ -35,8 +37,8 @@ function setProductContent() {
     thumbRow.appendChild(img);
   });
 
-  // ✅ 재고 확인 & 버튼 동작 설정
-  fetch(`https://script.google.com/macros/s/AKfycbzGCLc2AATyGkcuEp_iVZVDxdyOaNG2gBt87JDNo6-jpC0mJq96f6IElKiaoelFR_6n/exec`)
+  // ✅ 재고 확인
+  fetch(`https://script.google.com/macros/s/AKfycbzGCLc2AATyGkcuEp_iVZVDxdyOaNG2gBt87JDNo6-jpC0mJq96f6IElKiaoelFR_6n/exec?name=${encodeURIComponent(name)}`)
     .then(res => res.json())
     .then(data => {
       const btn = document.getElementById("addToCartBtn");
@@ -44,15 +46,17 @@ function setProductContent() {
         btn.style.display = "none";
         document.getElementById("sold-out-text").style.display = "block";
       } else {
+        btn.style.display = "block";
+        document.getElementById("sold-out-text").style.display = "none";
+
+        // 버튼 속성 설정
         btn.dataset.name = name;
         btn.dataset.price = price;
         btn.dataset.image = image;
-        btn.style.display = "block";
-        document.getElementById("sold-out-text").style.display = "none";
       }
     });
 
-  // ✅ 페이팔 버튼 생성
+  // ✅ PayPal 버튼
   paypal.Buttons({
     style: {
       layout: 'vertical',
