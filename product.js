@@ -52,14 +52,23 @@ function checkStock(productName) {
           const price = parseFloat(btn.dataset.price);
           const image = btn.dataset.image;
 
-          console.log("담기 전 확인", name, price, image);
+          const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+          const existingItem = cart.find(item => item.name === name);
+          const currentQty = existingItem ? existingItem.qty : 0;
+
+              if (currentQty >= stock) {
+      alert("재고를 초과하여 담을 수 없습니다.");
+      return;
+    }
+
+        buttoncart(name, price, image);
+    showToast();
 
           buttoncart(name, price, image);
           showToast();
         };
       }
     })
-    .catch(err => {
-      console.error("재고 조회 오류:", err);
-    });
+
 }
+
