@@ -38,6 +38,8 @@ function checkStock(productName) {
 
       if (!btn || !soldOutText) return;
 
+      btn.dataset.stock = stock;
+
       if (stock <= 0) {
         btn.style.display = "none";
         soldOutText.style.display = "block";
@@ -61,11 +63,26 @@ function checkStock(productName) {
       return;
     }
 
-        buttoncart(name, price, image);
-    showToast();
+function buttoncart(name, price, image) {
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-          buttoncart(name, price, image);
-          showToast();
+  const existingItem = cart.find(item => item.name === name);
+
+  if (existingItem) {
+    existingItem.quantity = (existingItem.quantity || 1) + 1;
+  } else {
+    cart.push({ name, price, image, quantity: 1 }); // ✅ quantity 꼭 포함!
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  // ✅ Toast 표시
+  const toast = document.getElementById("toast");
+  if (toast) {
+    toast.style.display = "block";
+    setTimeout(() => toast.style.display = "none", 2000);
+  }
+}
         };
       }
     })
