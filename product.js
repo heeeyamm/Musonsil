@@ -56,7 +56,7 @@ function checkStock(productName) {
 
           const cart = JSON.parse(localStorage.getItem("cart") || "[]");
           const existingItem = cart.find(item => item.name === name);
-          const currentQty = existingItem ? existingItem.qty : 0;
+          const currentQty = existingItem ? existingItem.quantity : 0;
 
               if (currentQty >= stock) {
       alert("재고를 초과하여 담을 수 없습니다.");
