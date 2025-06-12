@@ -38,21 +38,23 @@ function setProductContent() {
   });
 
   // ✅ 재고 확인
+  const btn = document.getElementById("addToCartBtn"); // 🔥 여기가 fetch보다 먼저 와야 함
+
+  // ✅ 버튼 정보 세팅 (무조건 먼저)
+  btn.dataset.name = name;
+  btn.dataset.price = price;
+  btn.dataset.image = image;
+
+  // ✅ 재고 확인 후 버튼 보이기/숨기기
   fetch(`https://script.google.com/macros/s/AKfycbzGCLc2AATyGkcuEp_iVZVDxdyOaNG2gBt87JDNo6-jpC0mJq96f6IElKiaoelFR_6n/exec?name=${encodeURIComponent(name)}`)
     .then(res => res.json())
     .then(data => {
-      const btn = document.getElementById("addToCartBtn");
       if (data.stock <= 0) {
         btn.style.display = "none";
         document.getElementById("sold-out-text").style.display = "block";
       } else {
         btn.style.display = "block";
         document.getElementById("sold-out-text").style.display = "none";
-
-        // 버튼 속성 설정
-        btn.dataset.name = name;
-        btn.dataset.price = price;
-        btn.dataset.image = image;
       }
     });
 
