@@ -38,3 +38,28 @@ function showToast() {
     toast.classList.remove("show");
   }, 2000);
 }
+
+// 기존 코드 그대로 두고 아래 함수만 맨 아래에 추가! (재고 품절시 품절뜨게)
+
+function checkStock(productName) {
+  fetch(`https://script.google.com/macros/s/AKfycbzGCLc2AATyGkcuEp_iVZVDxdyOaNG2gBt87JDNo6-jpC0mJq96f6IElKiaoelFR_6n/exec?name=${encodeURIComponent(productName)}`)
+    .then(res => res.json())
+    .then(data => {
+      const stock = Number(data.stock);
+      const btn = document.getElementById("addToCartBtn");
+      const soldOutText = document.getElementById("sold-out-text");
+
+      if (!btn || !soldOutText) return;
+
+      if (stock <= 0) {
+        btn.style.display = "none";
+        soldOutText.style.display = "block";
+      } else {
+        btn.style.display = "block";
+        soldOutText.style.display = "none";
+      }
+    })
+    .catch(error => {
+      console.error("재고 확인 실패:", error);
+    });
+}
