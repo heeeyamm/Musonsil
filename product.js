@@ -4,6 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(html => {
       document.getElementById('product-container').innerHTML = html;
 
+
+      //header.js 직접 로드
+      const script = document.createElement("script");
+      script.src - "/header.js";
+      document.body.appendChild(script);
+
       if (typeof setProductContent === 'function') {
         setProductContent();
       }
