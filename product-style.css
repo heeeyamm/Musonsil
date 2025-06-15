@@ -140,12 +140,13 @@
         box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         z-index: 1000;
         opacity: 0;
-        transition: opacity 0.3s ease;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
     .toast.show {
         display: block;
         opacity: 1;
+        visibility: visible;
     }
 
         #cart-link {
