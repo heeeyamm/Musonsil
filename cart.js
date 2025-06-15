@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  fetch("https://script.google.com/macros/s/AKfycby9M8xfIOgREdW2O5OEqbY5bpL85-hbiKXlYngmc9ggR-IscwFnvBR_MQ6ySM93c4aT/exec")
+  fetch("https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec")
     .then(res => res.json())
     .then(stockData => {
       cart.forEach((item, index) => {
