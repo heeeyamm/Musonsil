@@ -4,13 +4,12 @@ function buttoncart(name, price, image) {
   const existingItem = cart.find(item => item.name === name);
 
   if (existingItem) {
-    existingItem.quantity = (existingItem.quantity || 1) + 1;
+    existingItem.quantity += 1;
   } else {
     cart.push({ name, price, image, quantity: 1 });
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
-
   showToast();
 }
 
@@ -82,28 +81,3 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 });
-
-// ✅ 5. 상품 개별 정보 설정 (페이지별로 수정하는 부분!)
-function setProductContent() {
-  document.getElementById("mainImage").src = "bossabowl.png";
-  document.getElementById("product-title").textContent = "Dancing Bossa Nova 1";
-  document.getElementById("product-price").textContent = "$38";
-
-  const descriptionLines = [
-    "리듬이 흔들리는 듯한 자유로운 곡선",
-    "브라질 음악의 즉흥성과 서정성을 담은 형태",
-    "소량만 제작된 1점"
-  ];
-  const descContainer = document.getElementById("product-description");
-  descContainer.innerHTML = descriptionLines.map(line => `<p>${line}</p>`).join("");
-
-  const btn = document.getElementById("addToCartBtn");
-  if (btn) {
-    btn.dataset.name = "Dancing Bossa Nova 1";
-    btn.dataset.price = "38";
-    btn.dataset.image = "bossabowl.png";
-  }
-
-  // ✅ 재고 확인 호출!
-  checkStock("Dancing Bossa Nova 1");
-}
