@@ -1,4 +1,4 @@
-function setProductContent() {
+function setProductContent() { //여기 각 상품 정보로 수정//
   const name = "Dancing Bossa Nova 1";
   const price = 75;
   const image = "bossabowl.png";
