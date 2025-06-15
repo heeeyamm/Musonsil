@@ -69,10 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
           const name = btn.dataset.name;
           const price = parseFloat(btn.dataset.price);
           const image = btn.dataset.image;
-          const stock = parseInt(btn.dataset.stock || "9999");
+          const stockValue = btn.dataset.stock;
 
-          console.log("click", {name, price, stock});
+          if (!stockValue) {
+            alert("재고 정보를 불러오는 중입니다. 잠시만 기다려 주세요.");
+            return;
+          }
 
+          const stock = parseInt(stockValue);
           const cart = JSON.parse(localStorage.getItem("cart") || "[]");
           const existingItem = cart.find(item => item.name === name);
           const currentQty = existingItem ? existingItem.quantity : 0;
