@@ -71,6 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
           const image = btn.dataset.image;
           const stock = parseInt(btn.dataset.stock || "9999");
 
+          console.log("click", {name, price, stock});
+
           const cart = JSON.parse(localStorage.getItem("cart") || "[]");
           const existingItem = cart.find(item => item.name === name);
           const currentQty = existingItem ? existingItem.quantity : 0;
