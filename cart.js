@@ -9,13 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // 재고 전체 불러오기
   fetch("https://script.google.com/macros/s/AKfycby9M8xfIOgREdW2O5OEqbY5bpL85-hbiKXlYngmc9ggR-IscwFnvBR_MQ6ySM93c4aT/exec")
     .then(res => res.json())
     .then(stockData => {
       cart.forEach((item, index) => {
         const stockInfo = stockData.find(p => p.name === item.name);
         const stock = stockInfo ? Number(stockInfo.stock) : 0;
+        const quantity = item.quantity || 1;
 
         const itemEl = document.createElement("div");
         itemEl.className = "cart-item";
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         qtyBox.className = "cart-qty";
 
         const qty = document.createElement("span");
-        qty.textContent = item.quantity || 1;
+        qty.textContent = quantity;
 
         const minus = document.createElement("button");
         minus.textContent = "-";
@@ -56,8 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
         plus.textContent = "+";
         plus.className = "qty-btn";
         plus.onclick = () => {
-          if ((item.quantity || 1) < stock) {
-            cart[index].quantity = (cart[index].quantity || 1) + 1;
+          if (quantity < stock) {
+            cart[index].quantity = quantity + 1;
             localStorage.setItem("cart", JSON.stringify(cart));
             location.reload();
           } else {
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         qtyBox.append(minus, qty, plus);
         details.append(name, price, qtyBox, remove);
 
-        if (item.quantity > stock) {
+        if (quantity > stock) {
           const warning = document.createElement("p");
           warning.textContent = `※ 재고 초과: 현재 재고 ${stock}개`;
           warning.style.color = "red";
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         itemEl.append(img, details);
         container.appendChild(itemEl);
 
-        total += item.price * Math.min(item.quantity || 1, stock);
+        total += item.price * Math.min(quantity, stock);
       });
 
       totalDisplay.textContent = `Total: $${total.toFixed(2)}`;
