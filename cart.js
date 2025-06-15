@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const container = document.getElementById("cart-items");
   const totalDisplay = document.getElementById("cart-total");
+
+  if (!container || !totalDisplay) return; // ✅ cart.html 아닐 경우 아무것도 하지 않음
+
   let total = 0;
 
   if (cart.length === 0) {
