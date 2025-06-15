@@ -24,7 +24,7 @@ function showToast() {
 
 // ✅ 3. 재고 확인 및 버튼 처리
 function checkStock(productName) {
-  fetch(`https://script.google.com/macros/s/AKfycbzb8ukfcIHa4BTYnbeSzzgaWFsWn492l1jcxxsnVGnc_jJpuIA1eJygotLZRTIP64i-/exec?name=${encodeURIComponent(productName)}`)
+  fetch(`https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec?name=${encodeURIComponent(productName)}`)
     .then(res => res.json())
     .then(data => {
       const stock = Number(data.stock);
