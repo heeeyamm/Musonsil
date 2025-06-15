@@ -12,7 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch("https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec")
     .then(res => res.json())
     .then(stockData => {
-        console.log("stockData:", stockData); //이줄 추가
+        if (!Array.isArray(stockData)) {
+            console.error("stockData is not array:", stockData);
+            return;
+        }
       cart.forEach((item, index) => {
         const stockInfo = stockData.find(p => p.name === item.name);
         const stock = stockInfo ? Number(stockInfo.stock) : 0;
