@@ -1,7 +1,6 @@
-// ✅ 1. 장바구니에 담기 함수
+// ✅ 1. 장바구니에 담기
 function buttoncart(name, price, image) {
   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-
   const existingItem = cart.find(item => item.name === name);
 
   if (existingItem) {
@@ -12,14 +11,10 @@ function buttoncart(name, price, image) {
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  const toast = document.getElementById("toast");
-  if (toast) {
-    toast.style.display = "block";
-    setTimeout(() => (toast.style.display = "none"), 2000);
-  }
+  showToast();
 }
 
-// ✅ 2. 토스트 전용 함수 (CSS 클래스 방식 쓸 경우)
+// ✅ 2. 토스트 표시 함수
 function showToast() {
   const toast = document.getElementById("toast");
   if (!toast) return;
@@ -27,7 +22,7 @@ function showToast() {
   setTimeout(() => toast.classList.remove("show"), 2000);
 }
 
-// ✅ 3. 재고 확인 + 버튼 처리
+// ✅ 3. 재고 확인 및 버튼 처리
 function checkStock(productName) {
   fetch(`https://script.google.com/macros/s/AKfycbzb8ukfcIHa4BTYnbeSzzgaWFsWn492l1jcxxsnVGnc_jJpuIA1eJygotLZRTIP64i-/exec?name=${encodeURIComponent(productName)}`)
     .then(res => res.json())
@@ -63,7 +58,6 @@ function checkStock(productName) {
           }
 
           buttoncart(name, price, image);
-          showToast();
         };
       }
     })
@@ -72,7 +66,7 @@ function checkStock(productName) {
     });
 }
 
-// ✅ 4. 템플릿 로드 및 상품 설정
+// ✅ 4. 템플릿 로드 후 상품 설정 + 재고 확인
 document.addEventListener("DOMContentLoaded", () => {
   fetch("/product-template.html")
     .then(res => res.text())
@@ -84,7 +78,32 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.appendChild(script);
 
       if (typeof setProductContent === "function") {
-        setProductContent();
+        setProductContent(); // 상품 세팅 후
       }
     });
 });
+
+// ✅ 5. 상품 개별 정보 설정 (페이지별로 수정하는 부분!)
+function setProductContent() {
+  document.getElementById("mainImage").src = "bossabowl.png";
+  document.getElementById("product-title").textContent = "Dancing Bossa Nova 1";
+  document.getElementById("product-price").textContent = "$38";
+
+  const descriptionLines = [
+    "리듬이 흔들리는 듯한 자유로운 곡선",
+    "브라질 음악의 즉흥성과 서정성을 담은 형태",
+    "소량만 제작된 1점"
+  ];
+  const descContainer = document.getElementById("product-description");
+  descContainer.innerHTML = descriptionLines.map(line => `<p>${line}</p>`).join("");
+
+  const btn = document.getElementById("addToCartBtn");
+  if (btn) {
+    btn.dataset.name = "Dancing Bossa Nova 1";
+    btn.dataset.price = "38";
+    btn.dataset.image = "bossabowl.png";
+  }
+
+  // ✅ 재고 확인 호출!
+  checkStock("Dancing Bossa Nova 1");
+}
