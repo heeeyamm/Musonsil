@@ -21,7 +21,7 @@ function showToast() {
   setTimeout(() => toast.classList.remove("show"), 2000);
 }
 
-// ✅ 3. 재고 확인 및 버튼 처리
+// ✅ 3. 재고 확인만 (이제 버튼 이벤트는 여기서 설정 ❌)
 function checkStock(productName) {
   fetch(`https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec?name=${encodeURIComponent(productName)}`)
     .then(res => res.json())
@@ -37,27 +37,9 @@ function checkStock(productName) {
       if (stock <= 0) {
         btn.style.display = "none";
         soldOutText.style.display = "block";
-        btn.onclick = null;
       } else {
         btn.style.display = "block";
         soldOutText.style.display = "none";
-
-        btn.onclick = () => {
-          const name = btn.dataset.name;
-          const price = parseFloat(btn.dataset.price);
-          const image = btn.dataset.image;
-
-          const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-          const existingItem = cart.find(item => item.name === name);
-          const currentQty = existingItem ? existingItem.quantity : 0;
-
-          if (currentQty >= stock) {
-            alert("Not enough stock available.");
-            return;
-          }
-
-          buttoncart(name, price, image);
-        };
       }
     })
     .catch(err => {
@@ -65,7 +47,7 @@ function checkStock(productName) {
     });
 }
 
-// ✅ 4. 템플릿 로드 후 상품 설정 + 재고 확인
+// ✅ 4. 템플릿 로드 후 상품 설정 + 버튼 이벤트 등록
 document.addEventListener("DOMContentLoaded", () => {
   fetch("/product-template.html")
     .then(res => res.text())
@@ -78,6 +60,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (typeof setProductContent === "function") {
         setProductContent(); // 상품 세팅 후
+      }
+
+      // ✅ 버튼 이벤트는 항상 바로 등록!
+      const btn = document.getElementById("addToCartBtn");
+      if (btn) {
+        btn.addEventListener("click", () => {
+          const name = btn.dataset.name;
+          const price = parseFloat(btn.dataset.price);
+          const image = btn.dataset.image;
+          const stock = parseInt(btn.dataset.stock || "9999");
+
+          const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+          const existingItem = cart.find(item => item.name === name);
+          const currentQty = existingItem ? existingItem.quantity : 0;
+
+          if (currentQty >= stock) {
+            alert("Not enough stock available.");
+            return;
+          }
+
+          buttoncart(name, price, image);
+        });
       }
     });
 });
