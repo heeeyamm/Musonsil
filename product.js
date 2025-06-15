@@ -52,7 +52,7 @@ function checkStock(productName) {
           const currentQty = existingItem ? existingItem.quantity : 0;
 
           if (currentQty >= stock) {
-            alert("재고를 초과하여 담을 수 없습니다.");
+            alert("Not enough stock available.");
             return;
           }
 
@@ -61,7 +61,7 @@ function checkStock(productName) {
       }
     })
     .catch(err => {
-      console.error("재고 확인 오류:", err);
+      console.error("Sorry, we couldn't check the stock. Please try again later:", err);
     });
 }
 
