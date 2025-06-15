@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let total = 0;
 
   if (cart.length === 0) {
-    container.innerHTML = "<p>장바구니가 비어 있습니다.</p>";
+    container.innerHTML = "<p>Your cart is empty.</p>";
     return;
   }
 
