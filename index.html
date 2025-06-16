@@ -72,13 +72,19 @@
   .product-grid {
     max-width: 1200px;
     margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px /* 상품사이 간격 */
   }
 .product-grid:hover {
     color: #6b9ac4;
 }
   .product {
     text-align: center;
-    color: #001f3f
+    color: #001f3f;
+    width: calc(25% - 15px); /*네개씩 = 25%, 간격조정 */
+    box-sizing: border-box;
   }
 
   .product img {
