@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const stockValue = btn.dataset.stock;
 
           if (!stockValue) {
-            alert("재고 정보를 불러오는 중입니다. 잠시만 기다려 주세요.");
+            alert("Checking stock stuatus... Just a moment!");
             return;
           }
 
