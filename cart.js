@@ -144,16 +144,23 @@ if (debugButton) {
     cart.forEach(item => {
       console.log("🔁 디버그 테스트 중:", item);
 
-      const url = `${scriptURL}?name=${encodeURIComponent(item.name)}&quantity=${item.quantity || 1}`;
-
-      fetch(url)
-        .then(res => res.json())
-        .then(data => {
-          console.log("✅ 디버그 재고 차감 결과:", data);
+      fetch(scriptURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: item.name,
+          quantity: item.quantity || 1
         })
-        .catch(err => {
-          console.error("❌ 디버그 재고 차감 실패:", err);
-        });
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log("✅ 디버그 재고 차감 결과:", data);
+      })
+      .catch(err => {
+        console.error("❌ 디버그 재고 차감 실패:", err);
+      });
     });
   });
 }
