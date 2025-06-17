@@ -1,5 +1,5 @@
 function setProductContent() { //여기 각 상품 정보로 수정//
-  const name = "Dancing Bossa Nova 1";
+  const name = "Dancing Bossa Nova 2";
   const price = 75;
   const image = "bossabowl.png";
   const thumbnails = ["bossabowl.png", "bossagreensub1.jpg", "bossagreensub2.jpg"];
@@ -44,7 +44,7 @@ function setProductContent() { //여기 각 상품 정보로 수정//
   btn.dataset.image = image;
 
   // ✅ 재고 확인 호출만 간단히 (이부분 해당 상품 구글시트내의 상품명과 정확히 일치해야함 name을 지우고 넣기)
-  checkStock("Dancing Bossa Nova 1");
+  checkStock("Dancing Bossa Nova 2");
 
   // ✅ PayPal 버튼
   paypal.Buttons({
