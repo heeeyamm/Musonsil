@@ -129,10 +129,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }).render('#paypal-button-container');
   }
-});
-document.getElementById("debug-button").addEventListener("click", () => {
+  document.getElementById("debug-button").addEventListener("click", () => {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const scriptURL = "https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec";
+  const scriptURL = "https://script.google.com/macros/s/넣을_네_앱스크립트_URL/exec";
 
   if (cart.length === 0) {
     console.log("🛒 장바구니가 비었습니다.");
@@ -156,4 +155,5 @@ document.getElementById("debug-button").addEventListener("click", () => {
       console.error("❌ 디버그 재고 차감 실패:", err);
     });
   });
+});
 });
