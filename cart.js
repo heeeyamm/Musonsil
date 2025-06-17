@@ -144,6 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       cart.forEach(item => {
+        console.log(item);
         fetch(scriptURL, {
           method: "POST",
           headers: {
