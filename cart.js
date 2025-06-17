@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("cart-items");
   const totalDisplay = document.getElementById("cart-total");
 
-  if (!container || !totalDisplay) return; // ✅ cart.html 아닐 경우 아무것도 하지 않음
+  if (!container || !totalDisplay) return;
 
   let total = 0;
 
@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // ✅ 재고 연동 없이 렌더링
   cart.forEach((item, index) => {
     const quantity = item.quantity || 1;
 
@@ -99,6 +98,30 @@ document.addEventListener("DOMContentLoaded", () => {
       onApprove: function(data, actions) {
         return actions.order.capture().then(function(details) {
           alert(`${details.payer.name.given_name}, thank you for your order!`);
+
+          // ✅ 여기에 재고 차감 fetch 추가
+          const scriptURL = "https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec";
+
+          cart.forEach(item => {
+            fetch(scriptURL, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                name: item.name,
+                quantity: item.quantity || 1
+              })
+            })
+            .then(res => res.json())
+            .then(data => {
+              console.log("재고 차감 결과:", data);
+            })
+            .catch(err => {
+              console.error("재고 차감 실패:", err);
+            });
+          });
+
           localStorage.removeItem("cart");
           location.href = "/";
         });
