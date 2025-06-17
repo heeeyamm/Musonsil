@@ -96,8 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       },
       onApprove: function(data, actions) {
-        HTMLFormControlsCollection.log("paypal 결제 승인됨!");
         return actions.order.capture().then(function(details) {
+            console.log("paypal 결제 승인됨");
           alert(`${details.payer.name.given_name}, thank you for your order!`);
 
           // ✅ 여기에 재고 차감 fetch 추가
