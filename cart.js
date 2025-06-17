@@ -130,3 +130,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }).render('#paypal-button-container');
   }
 });
+document.getElementById("debug-button").addEventListener("click", () => {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec";
+
+  if (cart.length === 0) {
+    console.log("🛒 장바구니가 비었습니다.");
+    return;
+  }
+
+  cart.forEach(item => {
+    fetch(scriptURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: item.name,
+        quantity: item.quantity || 1
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log("✅ 디버그 재고 차감 결과:", data);
+    })
+    .catch(err => {
+      console.error("❌ 디버그 재고 차감 실패:", err);
+    });
+  });
+});
