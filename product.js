@@ -23,28 +23,36 @@ function showToast() {
 
 // ✅ 3. 재고 확인만 (이제 버튼 이벤트는 여기서 설정 ❌)
 function checkStock(productName) {
-  fetch(`https://script.google.com/macros/s/AKfycbyVxKBy8T_ZNM5TNHaqOz9GSgkXb-RyAZKHBu4MD0FsCyCpozyj6Q-kn8ZKUgfVnb06/exec?name=${encodeURIComponent(productName)}`)
-    .then(res => res.json())
-    .then(data => {
-      const stock = Number(data.stock);
-      const btn = document.getElementById("addToCartBtn");
-      const soldOutText = document.getElementById("sold-out-text");
+  const scriptURL = "https://script.google.com/macros/s/AKfycbyVxKBy8T_ZNM5TNHaqOz9GSgkXb-RyAZKHBu4MD0FsCyCpozyj6Q-kn8ZKUgfVnb06/exec";
 
-      if (!btn || !soldOutText) return;
+  fetch(scriptURL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ name: productName, quantity: 0 })  // ✅ 0개 요청으로 확인만
+  })
+  .then(res => res.json())
+  .then(data => {
+    const stock = Number(data.stock);
+    const btn = document.getElementById("addToCartBtn");
+    const soldOutText = document.getElementById("sold-out-text");
 
-      btn.dataset.stock = stock;
+    if (!btn || !soldOutText) return;
 
-      if (stock <= 0) {
-        btn.style.display = "none";
-        soldOutText.style.display = "block";
-      } else {
-        btn.style.display = "block";
-        soldOutText.style.display = "none";
-      }
-    })
-    .catch(err => {
-      console.error("Sorry, we couldn't check the stock. Please try again later:", err);
-    });
+    btn.dataset.stock = stock;
+
+    if (stock <= 0) {
+      btn.style.display = "none";
+      soldOutText.style.display = "block";
+    } else {
+      btn.style.display = "block";
+      soldOutText.style.display = "none";
+    }
+  })
+  .catch(err => {
+    console.error("❌ 재고 확인 실패:", err);
+  });
 }
 
 // ✅ 4. 템플릿 로드 후 상품 설정 + 버튼 이벤트 등록
