@@ -97,10 +97,9 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       onApprove: function(data, actions) {
         return actions.order.capture().then(function(details) {
-            console.log("paypal 결제 승인됨");
+          console.log("paypal 결제 승인됨");
           alert(`${details.payer.name.given_name}, thank you for your order!`);
 
-          // ✅ 여기에 재고 차감 fetch 추가
           const scriptURL = "https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec";
 
           cart.forEach(item => {
@@ -129,31 +128,39 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }).render('#paypal-button-container');
   }
-  document.getElementById("debug-button").addEventListener("click", () => {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const scriptURL = "https://script.google.com/macros/s/넣을_네_앱스크립트_URL/exec";
 
-  if (cart.length === 0) {
-    console.log("🛒 장바구니가 비었습니다.");
-    return;
-  }
+  // 🔧 [디버그용] 결제 없이 fetch 재고 차감 테스트용 버튼
+  // 나중에 개발 완료 후 이 블록 전체 삭제해도 됩니다 👇👇
+  const debugButton = document.getElementById("debug-button");
+  if (debugButton) {
+    debugButton.addEventListener("click", () => {
+      const scriptURL = "https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec";
 
-  cart.forEach(item => {
-    fetch(scriptURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: item.name,
-        quantity: item.quantity || 1
-      })
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log("✅ 디버그 재고 차감 결과:", data);
-    })
-    .catch(err => {
-      console.error("❌ 디버그 재고 차감 실패:", err);
+      if (cart.length === 0) {
+        console.log("🛒 장바구니가 비었습니다.");
+        return;
+      }
+
+      cart.forEach(item => {
+        fetch(scriptURL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name: item.name,
+            quantity: item.quantity || 1
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log("✅ 디버그 재고 차감 결과:", data);
+        })
+        .catch(err => {
+          console.error("❌ 디버그 재고 차감 실패:", err);
+        });
+      });
     });
-  });
-});
+  }
+  // 🔧 [디버그용 끝]
 });
