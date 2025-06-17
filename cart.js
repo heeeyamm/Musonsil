@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
           alert(`${details.payer.name.given_name}, thank you for your order!`);
 
           const scriptURL = "https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec";
-
+                             
           cart.forEach(item => {
             fetch(scriptURL, {
               method: "POST",
@@ -144,7 +144,14 @@ if (debugButton) {
     cart.forEach(item => {
       console.log(item);
 
-      const url = `${scriptURL}?name=${encodeURIComponent(item.name)}&quantity=${item.quantity || 1}`;
+      fetch(scriptURL, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    name: item.name,
+    quantity: item.quantity || 1
+  })
+})
 
       fetch(url)
         .then(res => res.json())
