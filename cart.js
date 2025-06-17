@@ -131,9 +131,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🔧 [디버그용] 결제 없이 fetch 재고 차감 테스트용 버튼
   // 나중에 개발 완료 후 이 블록 전체 삭제해도 됩니다 👇👇
-  const scriptURL = "https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec";
-  
-  const debugButton = document.getElementById("debug-button");
+const debugButton = document.getElementById("debug-button");
+const scriptURL = "https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec";
+
 if (debugButton) {
   debugButton.addEventListener("click", () => {
     if (cart.length === 0) {
@@ -142,22 +142,27 @@ if (debugButton) {
     }
 
     cart.forEach(item => {
-      console.log(item);
+      console.log("🔁 디버그 테스트 중:", item);
 
-      const url = `${scriptURL}?name=${encodeURIComponent(item.name)}&quantity=${item.quantity || 1}`;
-
-      fetch(url)
-        .then(res => res.json())
-        .then(data => {
-          console.log("✅ 디버그 재고 차감 결과:", data);
+      fetch(scriptURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: item.name,
+          quantity: item.quantity || 1
         })
-        .catch(err => {
-          console.error("❌ fetch 실패:", err);
-        });
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log("✅ 디버그 재고 차감 결과:", data);
+      })
+      .catch(err => {
+        console.error("❌ 디버그 재고 차감 실패:", err);
+      });
     });
   });
 }
-
-
   // 🔧 [디버그용 끝]
 });
