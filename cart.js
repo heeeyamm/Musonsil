@@ -131,10 +131,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🔧 [디버그용] 결제 없이 fetch 재고 차감 테스트용 버튼
   // 나중에 개발 완료 후 이 블록 전체 삭제해도 됩니다 👇👇
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec";
+  
   const debugButton = document.getElementById("debug-button");
   if (debugButton) {
     debugButton.addEventListener("click", () => {
-      const scriptURL = "https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec";
+    
 
       if (cart.length === 0) {
         console.log("🛒 장바구니가 비었습니다.");
