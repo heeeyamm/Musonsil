@@ -23,7 +23,7 @@ function showToast() {
 
 // ✅ 3. 재고 확인만 (이제 버튼 이벤트는 여기서 설정 ❌)
 function checkStock(productName) {
-  fetch(`https://script.google.com/macros/s/AKfycbxpBiy_DoqY1THQmBGzJMxaSKvrjfJgZUMh8VuumCwrtWcqJcpCu2ITSdAm15SIgRAV/exec?name=${encodeURIComponent(productName)}`)
+  fetch(`https://script.google.com/macros/s/AKfycbwVAT_1vsBySDAYVohkehWnoQ7w4Jsk4GsQPjWnQ2tEFaswdraymN-AZC0WisWvgzD_/exec?name=${encodeURIComponent(productName)}`)
     .then(res => res.json())
     .then(data => {
       const stock = Number(data.stock);
