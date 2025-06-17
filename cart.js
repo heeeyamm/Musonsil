@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 🔧 [디버그용] 결제 없이 fetch 재고 차감 테스트용 버튼
   // 나중에 개발 완료 후 이 블록 전체 삭제해도 됩니다 👇👇
 const debugButton = document.getElementById("debug-button");
-const scriptURL = "https://script.google.com/macros/s/AKfycbwVAT_1vsBySDAYVohkehWnoQ7w4Jsk4GsQPjWnQ2tEFaswdraymN-AZC0WisWvgzD_/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbyVxKBy8T_ZNM5TNHaqOz9GSgkXb-RyAZKHBu4MD0FsCyCpozyj6Q-kn8ZKUgfVnb06/exec";
 
 if (debugButton) {
   debugButton.addEventListener("click", () => {
